@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #clock{
+            border:2px solid #000;
+            border-radius:50%;
+            width:200px;
+            height:200px;
+            position:absolute;
+            left:0;
+            top:0;
+            bottom:0;
+            right:0;
+            margin:auto;
+        }
+        #hour-box,#minute-box,#seconds-box{
+            position:absolute;
+            top:0;
+            left:0;
+            width:200px;
+            height:200px;
+        }
+        .clock1-point,.clock2-point{
+            width:200px;
+            height:200px;
+            position:absolute;
+            top:0;
+            left:0;
+        }
+        #hour{
+            width:4px;
+            height:36px;
+            background-color:#000;
+            position:absolute;
+            top:64px;
+            left:98px;
+            -webkit-animation:run 1s ease 0s  forwards;
+        }
+        #minute{
+            width:2px;
+            height:50px;
+            background-color:green;
+            position:absolute;
+            left:99px;
+            top:50px;
+
+        }
+        #seconds{
+            width:1px;
+            height:55px;
+            background-color:red;
+            position:absolute;
+            top:45px;
+            left:99px;
+        }
+        .hour-point{
+            width:1px;
+            height:8px;
+            background-color:#000;
+            position:absolute;
+            top:0;
+            left:99px;
+        }
+        .minute-point{
+            width:1px;
+            height:5px;
+            background-color:#000;
+            position:absolute;
+            top:0;
+            left:99px;
+        }
+    </style>
+</head>
+<body>
+<div id="clock">
+    <div id="hour-box">
+        <div id="hour"></div>
+    </div>
+    <div id="minute-box">
+        <div id="minute"></div>
+    </div>
+    <div id="seconds-box">
+        <div id="seconds"></div>
+    </div>
+</div>
+<script>
+    var clock=document.getElementById('clock');
+    for(var i = 0; i < 12; i++) {
+        clock.innerHTML += "<div class='clock1-point'>"
+                + "<div class='hour-point'></div>"+"</div>";
+    }
+    var clockPoint1 = document.getElementsByClassName('clock1-point');
+    for(var i = 0; i < clockPoint1.length; i++) {
+        clockPoint1[i].style.transform="rotate(" + (i * 30) + "deg)";
+    }
+    for(var j = 0; j < 60; j++) {
+        clock.innerHTML += "<div class='clock2-point'>"
+                + "<div class='minute-point'></div>"+"</div>";
+    }
+    var clockPoint2 = document.getElementsByClassName('clock2-point');
+    for(var j = 0; j < clockPoint2.length; j++) {
+        clockPoint2[j].style.transform="rotate(" + (j * 6) + "deg)";
+    }
+    var minuteBox=document.getElementById('minute-box');
+    var hourBox=document.getElementById('hour-box');
+    var secondsBox=document.getElementById('seconds-box');
+    function setTime(){
+        var date=new Date();
+        var hour=date.getHours();
+        var minute=date.getMinutes();
+        var seconds=date.getSeconds();
+        hourBox.style.webkitTransform="rotate("+(hour+minute/60)*30+'deg)';
+        minuteBox.style.webkitTransform="rotate("+(minute+seconds/60)*6+'deg)';
+        secondsBox.style.webkitTransform="rotate("+seconds*6+'deg)';
+    }
+    setTime();
+    setInterval(function(){
+        setTime();
+    },1000);
+</script>
+</body>
+</html>
