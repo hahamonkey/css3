@@ -120,7 +120,7 @@
         minuteBox.style.webkitTransform="rotate("+(minute+seconds/60)*6+'deg)';
         secondsBox.style.webkitTransform="rotate("+seconds*6+'deg)';
     }
-    setTime();
+    setTime();//这里先运行一次是消除中间停顿的视觉效果
     setInterval(function(){
         setTime();
     },1000);
