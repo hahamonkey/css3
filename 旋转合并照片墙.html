@@ -30,6 +30,30 @@
             height:125px;
             opacity: 0;
         }
+        #prev{
+            width:40px;
+            height:80px;
+            font-size:55px;
+            background:#fff url('img/prev.png') no-repeat center center;
+            border-radius:0 10px 10px 0;
+            position:absolute;
+            top:50%;
+            left:0;
+            -webkit-transform:translateY(-50%);
+            display:none;
+        }
+        #next{
+            width:40px;
+            height:80px;
+            font-size:55px;
+            background:#fff url('img/next.png') no-repeat center center;
+            border-radius:10px 0 0 10px;
+            position:absolute;
+            top:50%;
+            right:0;
+            -webkit-transform:translateY(-50%);
+            display:none;
+        }
     </style>
 </head>
 <body>
@@ -41,6 +65,7 @@
           <div id="next"></div>
     </div>
     <script>
+        var iNow=0;
         var num=0;
         var oContent=document.getElementById('content');
         for(var i=0;i<24;i++){
@@ -74,7 +99,7 @@
                         col: j
                     }
                     oDiv.index=count;
-                    oDiv.innerHTML="<span></span>"
+                    oDiv.innerHTML="<span></span>";
                     oDiv.onclick=fn;
                     oContent.append(oDiv);
                 }
@@ -94,6 +119,7 @@
             var flag=true;
             function fn(){
                 if(flag){
+                    iNow=this.index;
                     for(var i=0;i<aDiv.length;i++){
                         var oDiv=aDiv[i];
                         oDiv.style.webkitTransitionDelay='0ms';
@@ -106,6 +132,8 @@
                         aSpan[i].style.background='url(img/'+this.index+'.jpg) '
                                 +(oDiv.pos.col-1)*-125+'px '
                                 +(oDiv.pos.row-1)*-125+'px';
+                        oPrev.style.display='block';
+                        oNext.style.display='block';
                     }
                 }else{
                     for(var i=0; i<aDiv.length; i++){
@@ -115,11 +143,34 @@
                         oDiv.style.WebkitTransform = 'rotate('+(Math.random()-0.5)*40+'deg)';
                         oDiv.style.border = '5px solid #fff';
                         aSpan[i].style.opacity = 0;
+                        oPrev.style.display='none';
+                        oNext.style.display='none';
                     }
                 }
                 flag = !flag;
             }
+            var oPrev=document.getElementById('prev');
+            var oNext=document.getElementById('next');
+            oPrev.onclick=function(){
+                iNow--;
+                if(iNow==0)
+                    iNow=24;
+                for(var i=0;i<aDiv.length;i++){
+                    aSpan[i].style.webkitTransitionDelay=Math.random()*500+'ms';
+                    aSpan[i].style.backgroundImage='url(img/'+iNow+'.jpg) ';
+                }
+            }
+            oNext.onclick=function(){
+                iNow++;
+                if(iNow==25)
+                    iNow=1;
+                for(var i=0;i<aDiv.length;i++){
+                    aSpan[i].style.webkitTransitionDelay=Math.random()*500+'ms';
+                    aSpan[i].style.backgroundImage='url(img/'+iNow+'.jpg) ';
+                }
+            }
         }
+
     </script>
 </body>
 </html>
