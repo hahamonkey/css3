@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        html,body{
+            height: 100%;
+        }
+        #container{
+            height: 100%;
+            background: url("img/bg.jpg") 0 0 ;
+        }
+        .img{
+            width: 125px;
+            height: 125px;
+            border:5px solid #fff;
+            position: absolute;
+            left:-150px;
+            top:-150px;
+            -webkit-transition: all 2s ease 1s;
+        }
+        .img span{
+            display:block;
+            width:125px;
+            height:125px;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="content">
+
+        </div>
+          <div id="prev"></div>
+          <div id="next"></div>
+    </div>
+    <script>
+        var num=0;
+        var oContent=document.getElementById('content');
+        for(var i=0;i<24;i++){
+            var oImg=new Image();
+            oImg.onload=function(){
+                num++;
+                if(num==48)
+                    loadSuccess();
+            }
+            oImg.src="img/thumbs/"+(i+1)+".jpg";
+        }
+        for(var i=0;i<24;i++){
+            var oImg=new Image();
+            oImg.onload=function(){
+                num++;
+                if(num==48)
+                    loadSuccess();
+            }
+            oImg.src="img/"+(i+1)+".jpg";
+        }
+        function loadSuccess() {
+            var count = 0;
+            for (var i = 1; i < 5; i++)
+                for (var j = 1; j < 7; j++) {
+                    var oDiv = document.createElement('div');
+                    oDiv.className = 'img';
+                    count++;
+                    oDiv.style.background = 'url(img/thumbs/' + count + '.jpg) no-repeat';
+                    oDiv.pos = {
+                        row: i,
+                        col: j
+                    }
+                    oDiv.index=count;
+                    oDiv.innerHTML="<span></span>"
+                    oDiv.onclick=fn;
+                    oContent.append(oDiv);
+                }
+            var aDiv=oContent.getElementsByTagName('div');
+            var iLeft = (document.body.offsetWidth - 135*6)/7;
+            var iTop = (document.body.offsetHeight - 135*4)/5;
+            for(var i=0; i<24; i++){
+                var oDiv = aDiv[i];
+                oDiv.style.transitionDelay=(23-i)*100+'ms';
+                oDiv.style.left =  oDiv.pos.col*iLeft + (oDiv.pos.col-1) * 135 +'px';
+                oDiv.style.top =  oDiv.pos.row*iTop + (oDiv.pos.row-1) * 135 +'px';
+                oDiv.style.webkitTransform="rotate("+(Math.random()-0.5)*40+"deg)";
+            }
+            var iLeftMore=(document.body.offsetWidth-127*6)/2;
+            var iTopMore=(document.body.offsetHeight-127*4)/2;
+            var aSpan=document.getElementsByTagName('span');
+            var flag=true;
+            function fn(){
+                if(flag){
+                    for(var i=0;i<aDiv.length;i++){
+                        var oDiv=aDiv[i];
+                        oDiv.style.webkitTransitionDelay='0ms';
+                        oDiv.style.webkitTransitionDuration='1s';
+                        oDiv.style.border='1px solid #fff';
+                        oDiv.style.webkitTransform='rotate(0deg)';
+                        oDiv.style.top=(oDiv.pos.row-1)*125+iTopMore+'px';
+                        oDiv.style.left=(oDiv.pos.col-1)*125+iLeftMore+'px';
+                        aSpan[i].style.opacity=1;
+                        aSpan[i].style.background='url(img/'+this.index+'.jpg) '
+                                +(oDiv.pos.col-1)*-125+'px '
+                                +(oDiv.pos.row-1)*-125+'px';
+                    }
+                }else{
+                    for(var i=0; i<aDiv.length; i++){
+                        var oDiv = aDiv[i];
+                        oDiv.style.left =  oDiv.pos.col*iLeft + (oDiv.pos.col-1) * 135 +'px';
+                        oDiv.style.top =  oDiv.pos.row*iTop + (oDiv.pos.row-1) * 135 +'px';
+                        oDiv.style.WebkitTransform = 'rotate('+(Math.random()-0.5)*40+'deg)';
+                        oDiv.style.border = '5px solid #fff';
+                        aSpan[i].style.opacity = 0;
+                    }
+                }
+                flag = !flag;
+            }
+        }
+    </script>
+</body>
+</html>
