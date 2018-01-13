@@ -54,6 +54,8 @@
             -webkit-transform:translateY(-50%);
             display:none;
         }
+
+
     </style>
 </head>
 <body>
@@ -129,6 +131,7 @@
                         oDiv.style.top=(oDiv.pos.row-1)*125+iTopMore+'px';
                         oDiv.style.left=(oDiv.pos.col-1)*125+iLeftMore+'px';
                         aSpan[i].style.opacity=1;
+                        aSpan[i].style.webkitTransitionDelay='0ms';
                         aSpan[i].style.background='url(img/'+this.index+'.jpg) '
                                 +(oDiv.pos.col-1)*-125+'px '
                                 +(oDiv.pos.row-1)*-125+'px';
@@ -143,6 +146,7 @@
                         oDiv.style.WebkitTransform = 'rotate('+(Math.random()-0.5)*40+'deg)';
                         oDiv.style.border = '5px solid #fff';
                         aSpan[i].style.opacity = 0;
+                        aSpan[i].style.webkitTransitionDelay='0ms';
                         oPrev.style.display='none';
                         oNext.style.display='none';
                     }
@@ -156,18 +160,25 @@
                 if(iNow==0)
                     iNow=24;
                 for(var i=0;i<aDiv.length;i++){
-                    aSpan[i].style.webkitTransitionDelay=Math.random()*500+'ms';
                     aSpan[i].style.backgroundImage='url(img/'+iNow+'.jpg) ';
+                    aSpan[i].style.webkitTransitionDelay=Math.random()*500+'ms';
                 }
+                /*for(var i=0;i<aDiv.length;i++){
+                    aSpan[i].style.webkitTransitionDelay='0ms';
+                }*/
             }
             oNext.onclick=function(){
                 iNow++;
                 if(iNow==25)
                     iNow=1;
                 for(var i=0;i<aDiv.length;i++){
-                    aSpan[i].style.webkitTransitionDelay=Math.random()*500+'ms';
+
                     aSpan[i].style.backgroundImage='url(img/'+iNow+'.jpg) ';
+                    aSpan[i].style.webkitTransitionDelay=Math.random()*500+'ms';
                 }
+                /*for(var i=0;i<aDiv.length;i++){
+                    aSpan[i].style.webkitTransitionDelay='0ms';
+                }*/
             }
         }
 
